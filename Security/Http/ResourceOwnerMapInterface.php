@@ -31,11 +31,12 @@ interface ResourceOwnerMapInterface
     /**
      * Gets the appropriate resource owner given the name.
      *
-     * @param string $name
+     * @param string      $name
+     * @param string|null $stateParameter
      *
      * @return null|ResourceOwnerInterface
      */
-    public function getResourceOwnerByName($name);
+    public function getResourceOwnerByName($name, $stateParameter = null);
 
     /**
      * Gets the appropriate resource owner for a request.

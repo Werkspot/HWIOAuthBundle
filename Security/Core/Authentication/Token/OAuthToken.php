@@ -58,6 +58,11 @@ class OAuthToken extends AbstractToken
     private $resourceOwnerName;
 
     /**
+     * @var string
+     */
+    private $stateParameter;
+
+    /**
      * @param string|array $accessToken The OAuth access token
      * @param array        $roles       Roles for the token
      */
@@ -254,6 +259,26 @@ class OAuthToken extends AbstractToken
     }
 
     /**
+     * Get the state parameter.
+     *
+     * @return string|null
+     */
+    public function getStateParameter()
+    {
+        return $this->stateParameter;
+    }
+
+    /**
+     * Set the state parameter.
+     *
+     * @param string|null $stateParameter
+     */
+    public function setStateParameter($stateParameter)
+    {
+        $this->stateParameter = $stateParameter;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function serialize()
@@ -265,6 +290,7 @@ class OAuthToken extends AbstractToken
             $this->expiresIn,
             $this->createdAt,
             $this->resourceOwnerName,
+            $this->stateParameter,
             parent::serialize(),
         ));
     }
@@ -277,7 +303,7 @@ class OAuthToken extends AbstractToken
         $data = unserialize($serialized);
         // add a few extra elements in the array to ensure that we have enough keys when un-serializing
         // older data which does not include all properties.
-        $data = array_merge($data, array_fill(0, 4, null));
+        $data = array_merge($data, array_fill(0, 5, null));
 
         list(
             $this->accessToken,
@@ -286,6 +312,7 @@ class OAuthToken extends AbstractToken
             $this->expiresIn,
             $this->createdAt,
             $this->resourceOwnerName,
+            $this->stateParameter,
             $parent) = $data;
 
         if (!$this->tokenSecret && isset($this->rawToken['oauth_token_secret'])) {

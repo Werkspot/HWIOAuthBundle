@@ -92,7 +92,8 @@ class OAuthListener extends AbstractAuthenticationListener
             return new RedirectResponse(sprintf('%s?code=%s&authenticated=true', $this->httpUtils->generateUri($request, 'hwi_oauth_connect_service'), $request->query->get('code')));
         }
 
-        $csrfToken = $this->extractCsrfTokenFromState($request->get('state'));
+        $stateParameter = $request->get('state');
+        $csrfToken = $this->extractCsrfTokenFromState($stateParameter);
         $resourceOwner->isCsrfTokenValid($csrfToken);
 
         $accessToken = $resourceOwner->getAccessToken(
@@ -102,6 +103,7 @@ class OAuthListener extends AbstractAuthenticationListener
 
         $token = new OAuthToken($accessToken);
         $token->setResourceOwnerName($resourceOwner->getName());
+        $token->setStateParameter($stateParameter);
 
         return $this->authenticationManager->authenticate($token);
     }

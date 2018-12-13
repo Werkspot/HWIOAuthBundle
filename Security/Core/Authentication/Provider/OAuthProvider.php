@@ -91,7 +91,7 @@ class OAuthProvider implements AuthenticationProviderInterface
         }
 
         /* @var OAuthToken $token */
-        $resourceOwner = $this->resourceOwnerMap->getResourceOwnerByName($token->getResourceOwnerName());
+        $resourceOwner = $this->resourceOwnerMap->getResourceOwnerByName($token->getResourceOwnerName(), $token->getStateParameter());
 
         $oldToken = $token->isExpired() ? $this->refreshToken($token, $resourceOwner) : $token;
         $userResponse = $resourceOwner->getUserInformation($oldToken->getRawToken());
@@ -114,6 +114,7 @@ class OAuthProvider implements AuthenticationProviderInterface
 
         $token = new OAuthToken($oldToken->getRawToken(), $user->getRoles());
         $token->setResourceOwnerName($resourceOwner->getName());
+        $token->setStateParameter($oldToken->getStateParameter());
         $token->setUser($user);
         $token->setAuthenticated(true);
         $token->setRefreshToken($oldToken->getRefreshToken());

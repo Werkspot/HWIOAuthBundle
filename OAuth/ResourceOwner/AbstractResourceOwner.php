@@ -174,6 +174,14 @@ abstract class AbstractResourceOwner implements ResourceOwnerInterface
     /**
      * {@inheritdoc}
      */
+    public function setState(StateInterface $state)
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function addStateParameter($key, $value)
     {
         $this->state->add($key, $value);

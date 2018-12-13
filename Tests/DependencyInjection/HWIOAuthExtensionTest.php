@@ -15,6 +15,7 @@ use Http\Client\Common\HttpMethodsClient;
 use Http\HttplugBundle\HttplugBundle;
 use HWI\Bundle\OAuthBundle\DependencyInjection\HWIOAuthExtension;
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwnerInterface;
+use HWI\Bundle\OAuthBundle\OAuth\StateInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,6 +64,10 @@ class MyCustomProvider implements ResourceOwnerInterface
     }
 
     public function getState()
+    {
+    }
+
+    public function setState(StateInterface $state)
     {
     }
 

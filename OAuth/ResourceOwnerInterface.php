@@ -122,6 +122,11 @@ interface ResourceOwnerInterface
     public function getState();
 
     /**
+     * @param StateInterface $state
+     */
+    public function setState(StateInterface $state);
+
+    /**
      * @param string $key
      * @param string $value
      */
