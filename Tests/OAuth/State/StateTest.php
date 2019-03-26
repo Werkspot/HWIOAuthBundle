@@ -82,6 +82,15 @@ final class StateTest extends \PHPUnit_Framework_TestCase
         $state->add('foo', 'foobar');
     }
 
+    public function testAddDuplicateKeyWhenItWasEmpty()
+    {
+        $state = new State(null);
+        self::assertSame('', $state->get('state'));
+
+        $state->add('state', 'foobar');
+        self::assertSame('foobar', $state->get('state'));
+    }
+
     public function testEncode()
     {
         $expectedParameter = $this->encodeArray(self::TEST_VALUES);
@@ -99,7 +108,7 @@ final class StateTest extends \PHPUnit_Framework_TestCase
     public function testEncodeEmptyValue()
     {
         $state = new State(null);
-        self::assertNull($state->encode());
+        self::assertSame('', $state->encode());
     }
 
     public function testSetCsrfTokenSetsProvidedToken()

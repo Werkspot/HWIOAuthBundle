@@ -69,7 +69,7 @@ final class State implements StateInterface
      */
     public function add($key, $value)
     {
-        if (isset($this->values[$key])) {
+        if (isset($this->values[$key]) && !empty($this->values[$key])) {
             throw new DuplicateKeyException(sprintf('State key [%s] is already set.', $key));
         }
 
